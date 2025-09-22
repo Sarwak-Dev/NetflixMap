@@ -1,20 +1,48 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Ejemplo Botones</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="main.css"> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix Map</title>
+    <link rel="stylesheet" href="styles/main.css">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 </head>
 <body>
-    <h1>HOLA</h1>
+    <div class="container">
+        <h1>Netflix shows and movies</h1>
+        
+        <div id="auth-section">
+            <button id="show-login-btn">Log in</button>
+            <button id="show-register-btn">Sign up</button>
+        </div>
 
-    <div class="botones">
-        <button id="boton1">Boton 1</button>
-        <button id="boton2">Boton 2</button>
-    </div>
+        <div id="user-info-section" style="display: none;">
+            <span id="welcome-message"></span>
+            <button id="logout-btn">Log out</button>
+        </div>
 
-<script src="app.js"></script>
+        <div id="auth-form" style="display: none;">
+            <h2 id="form-title"></h2>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit" id="submit-btn"></button>
+            </form>
+            <p id="auth-message"></p>
+        </div>
+
+        <div class="main-content">
+            <div id="map"></div>
+            <div id="favorites-section" style="display: none;">
+                <h2>My favorites</h2>
+                <ul id="favorites-list"></ul>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" type="module"></script>
+    
+    <script src="../../dist/app.js" type="module"></script>
 </body>
 </html>
