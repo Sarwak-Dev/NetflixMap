@@ -36,7 +36,7 @@ live-server .
 ## Modo de Uso
 #### Para usar la pagina tienes que iniciar sesion, despues eliges el pais que quieras seleccionar para ver una lista de peliculas hechas en ese pais en orden alfabetico y puedes añadirla a tu lista de peliculas favoritas.
 
-![Imagen del proyecto](https://i.imgur.com/JHAvsuT.png)
+![Imagen del proyecto](https://i.imgur.com/xag191o.png)
 ![Imagen del proyecto](https://i.imgur.com/MbYhhNY.png)
 
 <br>
