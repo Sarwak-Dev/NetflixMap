@@ -10,7 +10,7 @@
 ```bash
 # 1. Iniciar entorno
 python -m venv venv
-./venv/scripts/activate
+.\venv\scripts\activate
 # 2. Instalar dependencias
 pip install -r requirements.txt
 # 3. Iniciar el servidor
