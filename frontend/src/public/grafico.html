@@ -6,6 +6,10 @@
 
   <title>Grafico Netflix</title>
 
+<<<<<<< HEAD
+=======
+  <!-- Bootstrap CSS -->
+>>>>>>> 06b21653c9925ad6dd6fc1784548e4987c16d954
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
     rel="stylesheet"
@@ -13,13 +17,19 @@
     crossorigin="anonymous"
   />
 
+<<<<<<< HEAD
   <link rel="stylesheet" href="styles/main.css">
   
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> 
+=======
+  <!-- Tu hoja de estilos local -->
+  <link rel="stylesheet" href="styles/main.css">
+>>>>>>> 06b21653c9925ad6dd6fc1784548e4987c16d954
 </head>
 <body>
 
     <div class="container-fluid mt-4">
+<<<<<<< HEAD
         <div class="row justify-content-start mb-3">
              <div class="col-lg-10 offset-lg-1">
                 <a href="index.html" class="btn btn-outline-light text-white">
@@ -37,6 +47,20 @@
                     </div>
                     <div class="card-body">
                         <div id="country-bar-chart" style="width: 100%; height: 550px;">
+=======
+        <div class="row justify-content-center">
+            
+            <!-- Contenedor principal de la gráfica -->
+            <div class="col-lg-10">
+                <div class="card shadow">
+                    <div class="card-header d-flex">
+                        <h3 class="m-0 text-center">📊 Conteo de Títulos por País (Top 20)</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- Contenedor donde se renderizará el gráfico de Plotly -->
+                        <div id="country-bar-chart" style="width: 100%; height: 550px;">
+                            <div class="text-center p-5">Cargando datos del Backend...</div>
+>>>>>>> 06b21653c9925ad6dd6fc1784548e4987c16d954
                         </div>
                     </div>
                 </div>
@@ -45,9 +69,17 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
+=======
+    <!-- Bootstrap JS (Al final del body) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // ¡IMPORTANTE! Hemos añadido /api a la URL base.
+>>>>>>> 06b21653c9925ad6dd6fc1784548e4987c16d954
         const BACKEND_URL = 'http://127.0.0.1:5000/api'; 
 
         // --- FUNCIÓN PRINCIPAL: DIBUJAR EL GRÁFICO DE BARRAS ---
@@ -55,10 +87,18 @@
             const container = document.getElementById('country-bar-chart');
             
             try {
+<<<<<<< HEAD
                 // Llama al Endpoint 1: /api/country-counts
                 const response = await fetch(`${BACKEND_URL}/country-counts`);
                 
                 if (!response.ok) {
+=======
+                // La URL ahora será: http://127.0.0.1:5000/api/country-counts
+                const response = await fetch(`${BACKEND_URL}/country-counts`);
+                
+                if (!response.ok) {
+                    // Muestra el error específico que causó el fallo
+>>>>>>> 06b21653c9925ad6dd6fc1784548e4987c16d954
                     const errorText = await response.text();
                     throw new Error(`HTTP error! Estado: ${response.status}. Respuesta: ${errorText}`);
                 }
@@ -69,7 +109,10 @@
                 const top20Data = data.slice(0, 20);
                 
                 // 3. Preparar los datos para Plotly
+<<<<<<< HEAD
                 // Invertimos el orden para que la barra más larga quede arriba
+=======
+>>>>>>> 06b21653c9925ad6dd6fc1784548e4987c16d954
                 const countries = top20Data.map(item => item.country).reverse(); 
                 const counts = top20Data.map(item => item.count).reverse();
                 
@@ -80,7 +123,11 @@
                     type: 'bar',
                     orientation: 'h', 
                     marker: {
+<<<<<<< HEAD
                         color: 'rgb(220, 20, 60)', // Rojo de Netflix
+=======
+                        color: 'rgb(220, 20, 60)', 
+>>>>>>> 06b21653c9925ad6dd6fc1784548e4987c16d954
                         opacity: 0.9
                     }
                 };
@@ -95,7 +142,10 @@
                         title: 'País de Producción',
                         automargin: true 
                     },
+<<<<<<< HEAD
                     // Ajustamos el margen izquierdo para etiquetas largas de país
+=======
+>>>>>>> 06b21653c9925ad6dd6fc1784548e4987c16d954
                     margin: { l: 150, r: 20, t: 50, b: 50 } 
                 };
 
@@ -103,7 +153,10 @@
                 Plotly.newPlot(container, [trace], layout);
                 
             } catch (error) {
+<<<<<<< HEAD
                 // Muestra un error legible si falla la conexión
+=======
+>>>>>>> 06b21653c9925ad6dd6fc1784548e4987c16d954
                 container.innerHTML = `<div class="alert alert-danger">
                     <strong>Error de Conexión:</strong> No se pudo obtener datos del backend.<br>
                     Verifica que el servidor Flask esté activo en <code>http://127.0.0.1:5000</code>.<br>
@@ -118,4 +171,8 @@
     </script>
 
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> 06b21653c9925ad6dd6fc1784548e4987c16d954
