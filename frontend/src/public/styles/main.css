@@ -4,7 +4,6 @@ body {
     font-family: sans-serif;
     margin: 0;
     padding: 0;
-<<<<<<< HEAD
     
     /* Fondo base color azul marino */
     background-color: #0e2a47; 
@@ -15,13 +14,6 @@ body {
     background-size: 100% 1000px; /* Ajusta el tamaño al ancho y la altura original del SVG */
 
     /* Centra el contenido verticalmente si es necesario */
-=======
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 1600 800'%3E%3Cg stroke='%23000' stroke-width='66.7' stroke-opacity='0.05' %3E%3Ccircle fill='%2333F6FF' cx='0' cy='0' r='1800'/%3E%3Ccircle fill='%2311e6f9' cx='0' cy='0' r='1700'/%3E%3Ccircle fill='%2300d7f2' cx='0' cy='0' r='1600'/%3E%3Ccircle fill='%2300c7ea' cx='0' cy='0' r='1500'/%3E%3Ccircle fill='%2300b8e1' cx='0' cy='0' r='1400'/%3E%3Ccircle fill='%2300a8d6' cx='0' cy='0' r='1300'/%3E%3Ccircle fill='%230099cb' cx='0' cy='0' r='1200'/%3E%3Ccircle fill='%23118abe' cx='0' cy='0' r='1100'/%3E%3Ccircle fill='%23207bb1' cx='0' cy='0' r='1000'/%3E%3Ccircle fill='%232a6ca2' cx='0' cy='0' r='900'/%3E%3Ccircle fill='%232f5e93' cx='0' cy='0' r='800'/%3E%3Ccircle fill='%23335083' cx='0' cy='0' r='700'/%3E%3Ccircle fill='%23344273' cx='0' cy='0' r='600'/%3E%3Ccircle fill='%23333563' cx='0' cy='0' r='500'/%3E%3Ccircle fill='%23302853' cx='0' cy='0' r='400'/%3E%3Ccircle fill='%232c1b43' cx='0' cy='0' r='300'/%3E%3Ccircle fill='%23260f33' cx='0' cy='0' r='200'/%3E%3Ccircle fill='%23210024' cx='0' cy='0' r='100'/%3E%3C/g%3E%3C/svg%3E");
-    background-repeat: repeat-x; /* Para que se repita horizontalmente */
-    background-size: 100% 1000px; /* Ajusta el tamaño al ancho y la altura original del SVG */
-    background-color: #0e2a47; /* Establece el color de fondo base (el color principal en el SVG) */
-
->>>>>>> 06b21653c9925ad6dd6fc1784548e4987c16d954
     display: flex;
     flex-direction: column;
     align-items: center;
