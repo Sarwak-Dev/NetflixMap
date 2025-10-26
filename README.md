@@ -8,25 +8,20 @@
 ## Comandos de inicio
  #### En la carpeta `NetflixMap/backend` poner
 ```bash
-# 1. Navega a la carpeta backend
-cd backend
-# 2. Instala las dependencias
-npm install
-# 3. Inicia el servidor
-npm start
+# 1. Iniciar entorno
+python -m venv venv
+./venv/scripts/activate
+# 2. Instalar dependencias
+pip install -r requirements.txt
+# 3. Iniciar el servidor
+python app.py
 ```
 #### En la carpeta `NetflixMap/frontend` poner
 ```bash
-# 1. Navega a la carpeta frontend
-cd frontend
-# 2. Instala las dependencias
-npm install
-# 3. Compila el código
-npm run build
-# 4. Instala live server 
-npm install -g live-server
-# 5. Inicia el servidor
-live-server .
+# 1. Navega a la carpeta src/public
+cd src/public
+# 2. Inicia el servidor
+python -m http.server 8000
 ```
 
 <br>
