@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Grafico Netflix</title>
+
+  <!-- Bootstrap CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  />
+
+  <!-- Tu hoja de estilos local -->
+  <link
+    rel="stylesheet"
+    href="file:///C:/Users/rokix/Desktop/NetflixMap-main/frontend/src/public/styles/main.css"
+  />
+</head>
+<body>
+
+    <div class="container-fluid mt-4">
+        <div class="row justify-content-center">
+            
+            <!-- Contenedor principal de la gráfica -->
+            <div class="col-lg-10">
+                <div class="card shadow">
+                    <div class="card-header d-flex">
+                        <h3 class="m-0 text-center">📊 Conteo de Títulos por País (Top 20)</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- Contenedor donde se renderizará el gráfico de Plotly -->
+                        <div id="country-bar-chart" style="width: 100%; height: 550px;">
+                            <div class="text-center p-5">Cargando datos del Backend...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (Al final del body) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // ¡IMPORTANTE! Hemos añadido /api a la URL base.
+        const BACKEND_URL = 'http://127.0.0.1:5000/api'; 
+
+        // --- FUNCIÓN PRINCIPAL: DIBUJAR EL GRÁFICO DE BARRAS ---
+        async function drawBarChart() {
+            const container = document.getElementById('country-bar-chart');
+            
+            try {
+                // La URL ahora será: http://127.0.0.1:5000/api/country-counts
+                const response = await fetch(`${BACKEND_URL}/country-counts`);
+                
+                if (!response.ok) {
+                    // Muestra el error específico que causó el fallo
+                    const errorText = await response.text();
+                    throw new Error(`HTTP error! Estado: ${response.status}. Respuesta: ${errorText}`);
+                }
+
+                const data = await response.json();
+                
+                // 2. Tomar solo los 20 países con más contenido
+                const top20Data = data.slice(0, 20);
+                
+                // 3. Preparar los datos para Plotly
+                const countries = top20Data.map(item => item.country).reverse(); 
+                const counts = top20Data.map(item => item.count).reverse();
+                
+                // 4. Configuración del Gráfico de Barras
+                const trace = {
+                    x: counts,
+                    y: countries,
+                    type: 'bar',
+                    orientation: 'h', 
+                    marker: {
+                        color: 'rgb(220, 20, 60)', 
+                        opacity: 0.9
+                    }
+                };
+
+                const layout = {
+                    title: 'Distribución de Títulos por País (Top 20)',
+                    xaxis: {
+                        title: 'Cantidad de Títulos',
+                        automargin: true 
+                    },
+                    yaxis: {
+                        title: 'País de Producción',
+                        automargin: true 
+                    },
+                    margin: { l: 150, r: 20, t: 50, b: 50 } 
+                };
+
+                // 5. Dibujar el gráfico
+                Plotly.newPlot(container, [trace], layout);
+                
+            } catch (error) {
+                container.innerHTML = `<div class="alert alert-danger">
+                    <strong>Error de Conexión:</strong> No se pudo obtener datos del backend.<br>
+                    Verifica que el servidor Flask esté activo en <code>http://127.0.0.1:5000</code>.<br>
+                    Detalle: ${error.message}
+                </div>`;
+                console.error('Fetch error:', error);
+            }
+        }
+
+        // Cargar el gráfico al iniciar la página
+        window.onload = drawBarChart;
+    </script>
+
+</body>
+</html>
