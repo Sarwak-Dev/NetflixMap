@@ -15,8 +15,6 @@
     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
     crossorigin=""
   />
-
-  <!-- PapaParse para leer CSV correctamente (maneja comillas, comas en descripción, etc.) -->
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 
   <style>
@@ -101,7 +99,7 @@
 
   <script>
     // ===== 1. Inicializar mapa =====
-    const map = L.map('map').setView([20, 0], 2); // vista global
+    const map = L.map('map').setView([20, 0], 2);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 6,
@@ -110,7 +108,7 @@
     }).addTo(map);
 
     let datasetRows = [];
-    let countryField = 'country'; // en tu dataset existe esta columna
+    let countryField = 'country';
 
     // ===== 2. Cargar y parsear dataset.csv con PapaParse =====
     async function loadDataset() {
@@ -158,8 +156,6 @@
           // Igual exacto
           if (p === target) return true;
 
-          // Coincidencias "fuertes" por inclusión (para casos como
-          // "United States" vs "United States of America")
           if (target.includes(p) || p.includes(target)) return true;
 
           return false;
