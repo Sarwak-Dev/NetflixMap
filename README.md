@@ -1,6 +1,5 @@
 # NetflixMap
 #### Un mapa interactivo para visualizar el catálogo global de Netflix y muestra las peliculas hechas en cada pais en el mapa.
-https://www.kaggle.com/datasets/davidpbriggs/most-popular-netflix-shows
 
 <br>
 ▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄   ▄▄▄▄▄▄▄▄▄▄▄▄  
