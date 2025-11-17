@@ -5,16 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <title>Grafico Netflix</title>
+  <link rel="icon" type="image/png" href="../assets/favicon.ico" />
 
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
     rel="stylesheet"
-    xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous"
   />
 
-  <!-- Mantenemos tus estilos -->
-  <link rel="stylesheet" href="styles/main.css">
+  <!-- ¡RUTA CORREGIDA! -->
+  <link rel="stylesheet" href="../styles/main.css">
   
   <!-- Importamos la librería de gráficos -->
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> 
@@ -46,11 +47,14 @@
         <div class="row justify-content-center mb-3">
              <div class="col-lg-10">
                 <div class="d-flex justify-content-between align-items-center">
+                    
+                    <!-- ¡RUTA CORREGIDA! -->
                     <a href="../index.html" class="btn btn-outline-light">
                         ← Volver al Inicio
                     </a>
-                    <!-- ¡NUEVO! Botón de Logout -->
-                    <button class="btn btn-outline-warning" id="logoutButton">
+                    
+                    <!-- ¡CLASE CORREGIDA! -->
+                    <button class="btn btn-netflix-solid btn-sm" type="button" id="logoutButton">
                         Cerrar Sesión
                     </button>
                 </div>
@@ -64,20 +68,16 @@
                         <h3 class="m-0">📊 Conteo de Títulos por País (Top 20)</h3>
                     </div>
                     <div class="card-body">
-                        <!-- El contenedor se llenará con Plotly o con un mensaje de error -->
+                        <!-- ¡SPINNER ELIMINADO! -->
+                        <!-- El contenedor ahora está vacío y espera al script -->
                         <div id="country-bar-chart" style="width: 100%; min-height: 550px;">
-                            <div class="d-flex justify-content-center align-items-center h-100">
-                                <div class="spinner-border text-light" role="status">
-                                    <span class="visually-hidden">Cargando...</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         
-        <!-- Aquí puedes añadir más filas para más gráficos, como el de tipo -->
+        <!-- Gráfico de Tipo -->
         <div class="row justify-content-center mt-4">
              <div class="col-lg-10">
                  <div class="card shadow">
@@ -85,12 +85,9 @@
                         <h3 class="m-0">🎞️ Conteo por Tipo (Película vs Show)</h3>
                     </div>
                     <div class="card-body">
+                        <!-- ¡SPINNER ELIMINADO! -->
+                        <!-- El contenedor ahora está vacío y espera al script -->
                         <div id="type-pie-chart" style="width: 100%; min-height: 400px;">
-                            <div class="d-flex justify-content-center align-items-center h-100">
-                                <div class="spinner-border text-light" role="status">
-                                    <span class="visually-hidden">Cargando...</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                  </div>
@@ -101,39 +98,41 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     
+    <!-- El script JS no necesita cambios, ya que maneja los errores -->
     <script>
         const BACKEND_URL = 'http://127.0.0.1:5000/api'; 
 
-        // --- ¡NUEVO! FUNCIÓN AYUDANTE PARA FETCH PROTEGIDO ---
         /**
          * Realiza un fetch a un endpoint protegido, adjuntando el token JWT.
-         * @param {string} endpoint El endpoint de la API (ej. 'country-counts')
-         * @returns {Promise<any>} Los datos JSON de la respuesta.
          */
         async function fetchProtectedData(endpoint) {
           const token = localStorage.getItem('netflix_token');
 
           if (!token) {
-            // Si no hay token, no podemos continuar.
             throw new Error('No hay token de autenticación. Inicia sesión.');
           }
 
           const response = await fetch(`${BACKEND_URL}/${endpoint}`, {
             method: 'GET',
             headers: {
-              // ¡Esta es la parte clave!
               'Authorization': `Bearer ${token}`
             }
           });
 
           if (response.status === 401 || response.status === 422) {
-            // Token inválido o expirado.
             throw new Error('Token inválido o expirado. Por favor, inicia sesión de nuevo.');
           }
           
           if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`HTTP error! Estado: ${response.status}. Respuesta: ${errorText}`);
+            // Manejo de errores mejorado (del historial)
+            let errorJson = {};
+            try {
+                errorJson = await response.json();
+            } catch (e) {
+                throw new Error(`HTTP error! Estado: ${response.status}. Respuesta no es JSON.`);
+            }
+            const errorMsg = errorJson.error || JSON.stringify(errorJson);
+            throw new Error(`HTTP error! Estado: ${response.status}. Respuesta: ${errorMsg}`);
           }
           
           return await response.json();
@@ -144,18 +143,13 @@
             const container = document.getElementById('country-bar-chart');
             
             try {
-                // ¡CAMBIO! Usamos la nueva función protegida
                 const data = await fetchProtectedData('country-counts');
                 
-                // 2. Tomar solo los 20 países con más contenido
                 const top20Data = data.slice(0, 20);
                 
-                // 3. Preparar los datos para Plotly
-                // Invertimos el orden para que la barra más larga quede arriba
                 const countries = top20Data.map(item => item.country).reverse(); 
                 const counts = top20Data.map(item => item.count).reverse();
                 
-                // 4. Configuración del Gráfico de Barras
                 const trace = {
                     x: counts,
                     y: countries,
@@ -168,7 +162,6 @@
                 };
 
                 const layout = {
-                    // title: 'Distribución de Títulos por País (Top 20)', // El título ya está en la card
                     paper_bgcolor: 'rgba(0,0,0,0)', // Fondo transparente
                     plot_bgcolor: 'rgba(0,0,0,0)', // Fondo transparente
                     font: { color: '#f8f9fa' }, // Texto en blanco
@@ -178,40 +171,48 @@
                         gridcolor: '#444' // Líneas de la cuadrícula
                     },
                     yaxis: {
-                        // title: 'País de Producción', // Se sobreentiende
                         automargin: true,
                         gridcolor: '#444' // Líneas de la cuadrícula
                     },
                     margin: { l: 150, r: 20, t: 30, b: 50 } 
                 };
 
-                // 5. Dibujar el gráfico
+                // 5. Dibujar el gráfico (esto reemplaza el contenido del div)
                 Plotly.newPlot(container, [trace], layout, {responsive: true});
                 
             } catch (error) {
-                // Muestra un error legible si falla la conexión
-                container.innerHTML = `<div class="alert alert-danger">
-                    <strong>Error de Autenticación:</strong> ${error.message}<br>
-                    Verifica que hayas iniciado sesión. Serás redirigido a la página de inicio en 5 segundos.
-                </div>`;
+                // Manejo de errores (del historial)
                 console.error('Fetch error:', error);
+                let errorMessage = error.message;
+                let redirect = false;
 
-                // Limpiamos la sesión local por si el token expiró
-                localStorage.removeItem('netflix_token');
-                localStorage.removeItem('netflix_user');
-                
-                // Redirigimos a index.html
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 5000); // 5 segundos para que el usuario lea el mensaje
+                if (error.message.includes('Token inválido') || error.message.includes('No hay token')) {
+                    errorMessage = `<strong>Error de Autenticación:</strong> ${error.message}<br>
+                                  Verifica que hayas iniciado sesión. Serás redirigido a la página de inicio en 5 segundos.`;
+                    redirect = true;
+                } else {
+                    errorMessage = `<strong>Error del Servidor:</strong> ${error.message}<br>
+                                  Revisa la consola del servidor de Flask.`;
+                }
+
+                // Esto reemplaza el contenido del div con un error
+                container.innerHTML = `<div class="alert alert-danger">${errorMessage}</div>`;
+
+                if (redirect) {
+                    localStorage.removeItem('netflix_token');
+                    localStorage.removeItem('netflix_user');
+                    
+                    setTimeout(() => {
+                        window.location.href = '../index.html';
+                    }, 5000); 
+                }
             }
         }
 
-        // --- ¡NUEVO! FUNCIÓN PARA DIBUJAR GRÁFICO DE PIE ---
+        // --- FUNCIÓN PARA DIBUJAR GRÁFICO DE PIE ---
         async function drawPieChart() {
             const container = document.getElementById('type-pie-chart');
             try {
-                // Usamos el nuevo endpoint /api/type-counts
                 const data = await fetchProtectedData('type-counts');
 
                 const labels = data.map(item => item.type);
@@ -229,35 +230,35 @@
                 };
 
                 const layout = {
-                    // title: 'Conteo por Tipo', // Título en la card
                     paper_bgcolor: 'rgba(0,0,0,0)',
                     plot_bgcolor: 'rgba(0,0,0,0)',
                     font: { color: '#f8f9fa' },
                     showlegend: true
                 };
 
+                // Esto reemplaza el contenido del div
                 Plotly.newPlot(container, [trace], layout, {responsive: true});
 
             } catch (error) {
-                // No redirigimos aquí, el error principal lo hará
+                console.error("Error al cargar gráfico de pie:", error.message);
+                // Esto reemplaza el contenido del div con un error
                 container.innerHTML = `<div class="alert alert-danger">
                     No se pudieron cargar los datos de tipo. ${error.message}
                 </div>`;
             }
         }
 
-
-        // --- ¡NUEVO! LÓGICA DE LOGOUT ---
+        // --- LÓGICA DE LOGOUT ---
         document.getElementById('logoutButton').addEventListener('click', () => {
             localStorage.removeItem('netflix_token');
             localStorage.removeItem('netflix_user');
-            window.location.href = 'index.html';
+            window.location.href = '../index.html';
         });
 
         // Cargar los gráficos al iniciar la página
         window.onload = () => {
-            drawBarChart(); // Esta función maneja la autenticación principal
-            drawPieChart(); // Intentamos cargar el segundo gráfico
+            drawBarChart(); 
+            drawPieChart(); 
         };
     </script>
 
