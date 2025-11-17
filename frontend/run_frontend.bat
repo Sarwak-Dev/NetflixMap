@@ -1,0 +1,6 @@
+@echo off
+echo [FRONTEND] Entrando a la carpeta 'src\public'...
+cd src\public
+
+echo [FRONTEND] Ejecutando 'python -m http.server 8000'...
+python -m http.server 8000
