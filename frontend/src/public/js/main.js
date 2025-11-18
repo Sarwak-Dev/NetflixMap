@@ -89,6 +89,13 @@ if (loginForm) {
           localStorage.setItem('netflix_token', data.access_token);
           localStorage.setItem('netflix_user', username);
           
+          // --- ¡SOLUCIÓN PARA EL ERROR 'aria-hidden'! ---
+          // Quita el foco del botón ANTES de cerrar el modal.
+          if (document.activeElement) {
+            document.activeElement.blur();
+          }
+          // --- Fin de la solución ---
+
           const modalInst = bootstrap.Modal.getInstance(document.getElementById('authModal'));
           if (modalInst) {
             modalInst.hide();
