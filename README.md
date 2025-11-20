@@ -11,7 +11,7 @@ https://www.kaggle.com/datasets/davidpbriggs/most-popular-netflix-shows
 ## Comandos de inicio
 
 ### Opcion 1
-#### Recomendamos ejecutar ```start_proyect.bat``` de la raiz del proyecto.
+#### Recomendamos ejecutar ```start_proyect.bat``` de la raiz del proyecto, teniendo previamente python en el sistema.
 
 ### Opcion 2
  #### En la carpeta `NetflixMap/backend` poner:
@@ -46,7 +46,7 @@ python -m http.server 8000
 <br>
 
 ## Consideraciones
-Detectamos un bug que no añade bien a favoritos.
+Detectamos un bug que no se cierra la sesion automaticamente al cerrar la pagina.
 
 ###### 💻 | Development By Sarwak, Degoriv
 
